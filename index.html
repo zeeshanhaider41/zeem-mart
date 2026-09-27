@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zeem Mart — Shop Smart. Live Better.</title>
+<meta name="description" content="Zeem Mart — a modern online shopping experience.">
+<style>
+:root{--ink:#101114;--muted:#686b73;--paper:#f7f7f5;--card:#fff;--line:#e9e9e6;--accent:#6d35ff;--accent2:#b06cff;--green:#12a86b;--shadow:0 18px 50px rgba(16,17,20,.09)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--ink);background:var(--paper)}
+button,input{font:inherit}.top{background:#101114;color:#fff;text-align:center;padding:8px 16px;font-size:12px;letter-spacing:.4px}
+nav{height:76px;background:rgba(255,255,255,.92);backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line)}
+.logo{font-size:25px;font-weight:900;letter-spacing:-1.3px}.logo span{color:var(--accent)}
+.navlinks{display:flex;gap:26px}.navlinks a{color:#333;text-decoration:none;font-size:14px;font-weight:600}.actions{display:flex;align-items:center;gap:10px}
+.iconbtn{border:1px solid var(--line);background:#fff;border-radius:14px;width:42px;height:42px;cursor:pointer}.cartcount{background:var(--accent);color:#fff;border-radius:20px;padding:2px 6px;font-size:10px;position:relative;top:-15px;left:20px}
+.hero{padding:65px 5% 45px;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;max-width:1400px;margin:auto}
+.eyebrow{color:var(--accent);font-weight:800;font-size:13px;letter-spacing:2px;text-transform:uppercase}
+h1{font-size:clamp(44px,6vw,82px);line-height:.94;letter-spacing:-4px;margin:16px 0 24px;max-width:780px}
+.hero p{font-size:18px;color:var(--muted);line-height:1.7;max-width:590px}.cta{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.btn{border:0;border-radius:15px;padding:14px 20px;font-weight:800;cursor:pointer}.primary{background:var(--ink);color:#fff}.secondary{background:#fff;border:1px solid var(--line)}
+.heroart{min-height:430px;border-radius:34px;background:radial-gradient(circle at 70% 25%,#cbb9ff 0 12%,transparent 13%),linear-gradient(135deg,#ece5ff,#fff 48%,#e8fff5);position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.orb{position:absolute;border-radius:50%;filter:blur(1px)}.o1{width:290px;height:290px;background:linear-gradient(135deg,#7c49ff,#c9a9ff);right:-55px;top:25px}.o2{width:180px;height:180px;background:#bff7df;left:-35px;bottom:-30px}.showcase{position:absolute;left:17%;top:18%;width:66%;height:62%;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.9);border-radius:30px;transform:rotate(-6deg);box-shadow:0 30px 70px rgba(74,47,130,.2);display:flex;align-items:center;justify-content:center;font-size:100px}
+.section{padding:35px 5%;max-width:1400px;margin:auto}.sectionhead{display:flex;justify-content:space-between;align-items:end;margin-bottom:22px}.section h2{font-size:32px;margin:0;letter-spacing:-1.5px}.muted{color:var(--muted)}
+.cats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.cat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 12px;text-align:center;cursor:pointer;transition:.2s}.cat:hover{transform:translateY(-3px);box-shadow:var(--shadow)}.cat .emoji{font-size:30px}.cat b{display:block;margin-top:8px;font-size:13px}
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.product{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;position:relative}.pic{height:230px;background:linear-gradient(145deg,#f0efff,#f9fafb);display:flex;align-items:center;justify-content:center;font-size:76px}.info{padding:16px}.tag{font-size:10px;font-weight:900;color:var(--accent);text-transform:uppercase}.name{font-weight:800;margin:6px 0}.price{font-weight:900;font-size:19px}.old{text-decoration:line-through;color:#999;font-size:12px;margin-left:5px}.add{width:100%;margin-top:13px;background:var(--ink);color:#fff;border:0;border-radius:12px;padding:12px;font-weight:800;cursor:pointer}
+.banner{margin:35px 5%;border-radius:28px;background:linear-gradient(115deg,#17151f,#33206b 55%,#7b48ff);color:#fff;padding:45px;display:flex;justify-content:space-between;align-items:center;gap:20px}.banner h2{font-size:38px;margin:0 0 8px;letter-spacing:-2px}.banner p{margin:0;color:#d9d5e7}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.feature{background:#fff;border:1px solid var(--line);padding:22px;border-radius:18px}.feature b{display:block;margin:9px 0 5px}.feature p{font-size:13px;color:var(--muted);margin:0;line-height:1.5}
+footer{background:#101114;color:#fff;margin-top:45px;padding:45px 5% 25px}.footergrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px;max-width:1400px;margin:auto}.footergrid p,.footergrid a{color:#aeb0b8;font-size:13px;line-height:1.7;text-decoration:none}.copy{max-width:1400px;margin:35px auto 0;border-top:1px solid #2a2b31;padding-top:18px;color:#777;font-size:12px}
+.search{display:none;position:absolute;top:76px;left:0;right:0;background:#fff;padding:15px 5%;border-bottom:1px solid var(--line)}.search input{width:100%;padding:15px;border:1px solid var(--line);border-radius:14px;outline:none}
+.cartpanel{position:fixed;right:-420px;top:0;width:390px;max-width:92vw;height:100vh;background:#fff;z-index:50;box-shadow:-20px 0 60px rgba(0,0,0,.16);padding:25px;transition:.3s;display:flex;flex-direction:column}.cartpanel.open{right:0}.carthead{display:flex;justify-content:space-between;align-items:center}.cartitems{flex:1;overflow:auto;margin:20px 0}.cartitem{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:13px 0;gap:10px}.checkout{background:var(--green);color:#fff;border:0;border-radius:13px;padding:14px;font-weight:900;cursor:pointer}.empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:900px){.navlinks{display:none}.hero{grid-template-columns:1fr;padding-top:40px}.heroart{min-height:330px}.cats{grid-template-columns:repeat(3,1fr)}.products{grid-template-columns:repeat(2,1fr)}.features{grid-template-columns:repeat(2,1fr)}.footergrid{grid-template-columns:1fr 1fr}.banner{padding:30px;flex-direction:column;align-items:flex-start}}
+@media(max-width:520px){nav{height:66px}.search{top:66px}h1{letter-spacing:-2.5px}.hero{padding-left:18px;padding-right:18px}.section{padding-left:18px;padding-right:18px}.cats{grid-template-columns:repeat(2,1fr)}.products{grid-template-columns:1fr 1fr;gap:10px}.pic{height:165px;font-size:55px}.info{padding:12px}.banner{margin-left:18px;margin-right:18px}.banner h2{font-size:30px}.footergrid{grid-template-columns:1fr}}
+</style>
+<style>
+.modal{display:none;position:fixed;inset:0;background:rgba(10,10,14,.62);backdrop-filter:blur(8px);z-index:100;padding:18px;overflow:auto}.modal.show{display:flex;align-items:center;justify-content:center}.modalbox{background:#fff;border-radius:25px;max-width:680px;width:100%;padding:25px;box-shadow:0 30px 100px rgba(0,0,0,.3)}.modalhead{display:flex;justify-content:space-between;align-items:center}.modalhead h2{margin:0;font-size:27px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}.formgrid label{font-size:12px;font-weight:800;color:#333}.formgrid input,.formgrid textarea,.formgrid select{display:block;width:100%;margin-top:6px;border:1px solid #ddd;border-radius:12px;padding:12px;outline:none;background:#fff}.formgrid textarea{min-height:78px;resize:vertical}.formgrid .full{grid-column:1/-1}.orderpreview{display:flex;justify-content:space-between;background:#f6f6f4;padding:15px;border-radius:13px;margin:17px 0}.checkoutbuttons{display:flex;gap:10px;flex-wrap:wrap}.ordermessage{margin-top:12px;font-weight:700}.add{transition:.15s}.add:hover,.btn:hover,.checkout:hover{transform:translateY(-1px);opacity:.92}
+@media(max-width:560px){.formgrid{grid-template-columns:1fr}.formgrid .full{grid-column:auto}.modalbox{padding:19px}}
+</style>
+
+</head>
+<body>
+<div class="top">FREE DELIVERY ON ORDERS OVER Rs. 5,000 • ZEEM MART — SHOP SMART, LIVE BETTER</div>
+<nav>
+  <div class="logo">Zeem<span>Mart</span></div>
+  <div class="navlinks"><a href="#shop">Shop</a><a href="#categories">Categories</a><a href="#deals">Deals</a><a href="#why">Why Zeem?</a><a href="admin.html">Admin</a></div>
+  <div class="actions">
+    <button class="iconbtn" onclick="toggleSearch()" aria-label="Search">⌕</button>
+    <button class="iconbtn" onclick="toggleCart()" aria-label="Cart">🛒<span id="count" class="cartcount">0</span></button>
+  </div>
+  <div id="search" class="search"><input id="searchInput" oninput="filterProducts()" placeholder="Search products..."></div>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="eyebrow">The new way to shop</div>
+    <h1>Everything you want. One beautiful place.</h1>
+    <p>Welcome to Zeem Mart — a fresh, fast and premium shopping experience made for everyday life in Pakistan.</p>
+    <div class="cta"><button class="btn primary" onclick="document.querySelector('#shop').scrollIntoView()">Explore products →</button><button class="btn secondary" onclick="document.querySelector('#categories').scrollIntoView()">Browse categories</button></div>
+  </div>
+  <div class="heroart"><div class="orb o1"></div><div class="orb o2"></div><div class="showcase">🛍️</div></div>
+</section>
+
+<section id="categories" class="section">
+  <div class="sectionhead"><div><h2>Shop by category</h2><div class="muted">Curated for your everyday needs.</div></div></div>
+  <div class="cats">
+    <div class="cat" onclick="category('Fashion')"><div class="emoji">👗</div><b>Fashion</b></div>
+    <div class="cat" onclick="category('Beauty')"><div class="emoji">✨</div><b>Beauty</b></div>
+    <div class="cat" onclick="category('Electronics')"><div class="emoji">🎧</div><b>Electronics</b></div>
+    <div class="cat" onclick="category('Home')"><div class="emoji">🏠</div><b>Home</b></div>
+    <div class="cat" onclick="category('Accessories')"><div class="emoji">👜</div><b>Accessories</b></div>
+    <div class="cat" onclick="category('Kids')"><div class="emoji">🧸</div><b>Kids</b></div>
+  </div>
+</section>
+
+<section id="shop" class="section">
+  <div class="sectionhead"><div><h2>Trending now</h2><div class="muted">Your next favourite is waiting.</div></div><span id="result" class="muted"></span></div>
+  <div id="products" class="products"></div>
+</section>
+
+<section id="deals" class="banner">
+  <div><h2>Big style. Better prices.</h2><p>Launch your Zeem Mart collection with special offers and seasonal deals.</p></div>
+  <button class="btn secondary" onclick="document.querySelector('#shop').scrollIntoView()">Shop deals</button>
+</section>
+
+<section id="why" class="section">
+  <div class="sectionhead"><div><h2>Why Zeem Mart?</h2><div class="muted">Built around trust, convenience and style.</div></div></div>
+  <div class="features">
+    <div class="feature">🚚<b>Fast Delivery</b><p>Reliable delivery across Pakistan.</p></div>
+    <div class="feature">🔒<b>Secure Shopping</b><p>Your order details stay protected.</p></div>
+    <div class="feature">💬<b>Real Support</b><p>Easy help through WhatsApp or phone.</p></div>
+    <div class="feature">↩️<b>Easy Returns</b><p>Simple customer-friendly return policy.</p></div>
+  </div>
+</section>
+
+
+<div id="checkoutModal" class="modal">
+  <div class="modalbox">
+    <div class="modalhead"><h2>Complete Your Order</h2><button class="iconbtn" onclick="closeCheckout()">✕</button></div>
+    <p class="muted">Enter your details and choose how you want to place the order.</p>
+    <form id="orderForm" action="https://formspree.io/f/xrpbydne" method="POST" onsubmit="placeOrder(event)">
+      <div class="formgrid">
+        <label>Full Name<input id="custName" required placeholder="Your full name"></label>
+        <label>Phone Number<input id="custPhone" required pattern="[0-9+\-\s]{10,}" placeholder="03XXXXXXXXX"></label>
+        <label class="full">Complete Address<textarea id="custAddress" required placeholder="House, street, area, city"></textarea></label>
+        <label>City<input id="custCity" required placeholder="Mianwali"></label>
+        <label>Payment Method<select id="payment"><option>Cash on Delivery</option><option>Bank Transfer</option></select></label>
+        <label class="full">Order Notes<textarea id="notes" placeholder="Color, size, special instructions..."></textarea></label>
+      </div>
+      <div class="orderpreview"><b>Order Total</b><b id="modalTotal">Rs. 0</b></div>
+      <div class="checkoutbuttons">
+        <button type="submit" class="btn primary">Place Order</button>
+        <button type="button" class="btn secondary" onclick="sendWhatsApp()">Order via WhatsApp</button>
+      </div>
+      <input type="hidden" name="_subject" value="New Zeem Mart Order">
+      <input type="hidden" name="order_details" id="orderDetailsField">
+      <div id="orderMessage" class="ordermessage"></div>
+    </form>
+  </div>
+</div>
+<footer>
+<div class="footergrid">
+  <div><div class="logo">Zeem<span>Mart</span></div><p>A modern Pakistani online store concept. Replace these demo products with your own collection and start selling.</p></div>
+  <div><b>Shop</b><p><a href="#shop">All Products</a><br><a href="#categories">Categories</a><br><a href="#deals">Deals</a></p></div>
+  <div><b>Help</b><p><a href="#">Delivery</a><br><a href="#">Returns</a><br><a href="#">Contact</a></p></div>
+  <div><b>Contact</b><p>WhatsApp: +92 300 0000000<br>Email: hello@zeemmart.com<br>Pakistan</p></div>
+</div>
+<div class="copy">© 2026 Zeem Mart. All rights reserved.</div>
+</footer>
+
+<aside id="cart" class="cartpanel">
+  <div class="carthead"><h2>Your Cart</h2><button class="iconbtn" onclick="toggleCart()">✕</button></div>
+  <div id="cartitems" class="cartitems"></div>
+  <div><div style="display:flex;justify-content:space-between;margin-bottom:12px"><b>Total</b><b id="total">Rs. 0</b></div><button class="checkout" style="width:100%" onclick="checkout()">Order on WhatsApp</button></div>
+</aside>
+
+<script>
+const defaultProducts=[
+{name:"Premium Classic Watch",cat:"Accessories",price:3499,old:4499,emoji:"⌚"},
+{name:"Wireless Earbuds Pro",cat:"Electronics",price:2999,old:3999,emoji:"🎧"},
+{name:"Elegant Handbag",cat:"Fashion",price:2799,old:3499,emoji:"👜"},
+{name:"Glow Beauty Set",cat:"Beauty",price:1899,old:2399,emoji:"✨"},
+{name:"Smart Desk Lamp",cat:"Home",price:2499,old:2999,emoji:"💡"},
+{name:"Premium Men's Wallet",cat:"Accessories",price:1599,old:1999,emoji:"👝"},
+{name:"Cozy Home Cushion",cat:"Home",price:999,old:1299,emoji:"🛋️"},
+{name:"Kids Gift Pack",cat:"Kids",price:2199,old:2699,emoji:"🧸"}
+];
+let products=JSON.parse(localStorage.getItem("zeemmart_products")||"null")||defaultProducts;
+let cart=[];
+const money=n=>"Rs. "+n.toLocaleString("en-PK");
+function render(list=products){
+const box=document.getElementById("products"); box.innerHTML="";
+list.forEach((p,i)=>{box.innerHTML+=`<article class="product"><div class="pic">${p.emoji}</div><div class="info"><div class="tag">${p.cat}</div><div class="name">${p.name}</div><div class="price">${money(p.price)} <span class="old">${money(p.old)}</span></div><button class="add" onclick="add(${products.indexOf(p)})">Add to cart</button></div></article>`});
+document.getElementById("result").textContent=list.length+" products";
+}
+function add(i){cart.push(products[i]);renderCart();document.getElementById("cart").classList.add("open")}
+function renderCart(){document.getElementById("count").textContent=cart.length;const box=document.getElementById("cartitems");box.innerHTML=cart.length?cart.map((p,i)=>`<div class="cartitem"><span>${p.emoji} ${p.name}</span><b>${money(p.price)}<button onclick="removeItem(${i})" style="border:0;background:none;cursor:pointer">✕</button></b></div>`).join(""):'<div class="empty">Your cart is empty.<br>Add something you love.</div>';document.getElementById("total").textContent=money(cart.reduce((s,p)=>s+p.price,0))}
+function removeItem(i){cart.splice(i,1);renderCart()}
+function toggleCart(){document.getElementById("cart").classList.toggle("open")}
+function toggleSearch(){let s=document.getElementById("search");s.style.display=s.style.display==="block"?"none":"block";if(s.style.display==="block")document.getElementById("searchInput").focus()}
+function filterProducts(){let q=document.getElementById("searchInput").value.toLowerCase();render(products.filter(p=>(p.name+" "+p.cat).toLowerCase().includes(q)))}
+function category(c){render(products.filter(p=>p.cat===c));document.querySelector("#shop").scrollIntoView()}
+function checkout(){if(!cart.length)return alert("Please add a product first.");let text="Assalam-o-Alaikum, I want to order from Zeem Mart:%0A"+cart.map(p=>`• ${p.name} — ${money(p.price)}`).join("%0A")+`%0A%0ATotal: ${money(cart.reduce((s,p)=>s+p.price,0))}%0A%0AName:%0AAddress:%0APhone:`;window.open("https://wa.me/923000000000?text="+text,"_blank")}
+render();renderCart();
+</script>
+</body>
+</htmlasync function placeOrder(e){
+ e.preventDefault();
+ const form=document.getElementById("orderForm");
+ if(!form.reportValidity()) return;
+ const details=orderText();
+ document.getElementById("orderDetailsField").value=details;
+ const data=new FormData(form);
+ const msg=document.getElementById("orderMessage");
+ msg.textContent="Sending your order...";
+ msg.style.color="var(--muted)";
+ try{
+   const response=await fetch(form.action,{method:"POST",body:data,headers:{Accept:"application/json"}});
+   if(response.ok){
+     const order={order_id:"ZM-"+Date.now(),details:details};
+     localStorage.setItem("zeemmart_last_order",JSON.stringify(order));
+     msg.textContent="Order received successfully! Your order details have been sent.";
+     msg.style.color="var(--green)";
+     cart=[]; renderCart();
+   }else{
+     msg.textContent="Could not send the order. Please use WhatsApp instead.";
+     msg.style.color="#c0392b";
+   }
+ }catch(err){
+   msg.textContent="Internet/Formspree connection issue. Please use WhatsApp instead.";
+   msg.style.color="#c0392b";
+ }
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--ink);background:var(--paper)}
+button,input{font:inherit}.top{background:#101114;color:#fff;text-align:center;padding:8px 16px;font-size:12px;letter-spacing:.4px}
+nav{height:76px;background:rgba(255,255,255,.92);backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line)}
+.logo{font-size:25px;font-weight:900;letter-spacing:-1.3px}.logo span{color:var(--accent)}
+.navlinks{display:flex;gap:26px}.navlinks a{color:#333;text-decoration:none;font-size:14px;font-weight:600}.actions{display:flex;align-items:center;gap:10px}
+.iconbtn{border:1px solid var(--line);background:#fff;border-radius:14px;width:42px;height:42px;cursor:pointer}.cartcount{background:var(--accent);color:#fff;border-radius:20px;padding:2px 6px;font-size:10px;position:relative;top:-15px;left:20px}
+.hero{padding:65px 5% 45px;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;max-width:1400px;margin:auto}
+.eyebrow{color:var(--accent);font-weight:800;font-size:13px;letter-spacing:2px;text-transform:uppercase}
+h1{font-size:clamp(44px,6vw,82px);line-height:.94;letter-spacing:-4px;margin:16px 0 24px;max-width:780px}
+.hero p{font-size:18px;color:var(--muted);line-height:1.7;max-width:590px}.cta{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.btn{border:0;border-radius:15px;padding:14px 20px;font-weight:800;cursor:pointer}.primary{background:var(--ink);color:#fff}.secondary{background:#fff;border:1px solid var(--line)}
+.heroart{min-height:430px;border-radius:34px;background:radial-gradient(circle at 70% 25%,#cbb9ff 0 12%,transparent 13%),linear-gradient(135deg,#ece5ff,#fff 48%,#e8fff5);position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.orb{position:absolute;border-radius:50%;filter:blur(1px)}.o1{width:290px;height:290px;background:linear-gradient(135deg,#7c49ff,#c9a9ff);right:-55px;top:25px}.o2{width:180px;height:180px;background:#bff7df;left:-35px;bottom:-30px}.showcase{position:absolute;left:17%;top:18%;width:66%;height:62%;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.9);border-radius:30px;transform:rotate(-6deg);box-shadow:0 30px 70px rgba(74,47,130,.2);display:flex;align-items:center;justify-content:center;font-size:100px}
+.section{padding:35px 5%;max-width:1400px;margin:auto}.sectionhead{display:flex;justify-content:space-between;align-items:end;margin-bottom:22px}.section h2{font-size:32px;margin:0;letter-spacing:-1.5px}.muted{color:var(--muted)}
+.cats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.cat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 12px;text-align:center;cursor:pointer;transition:.2s}.cat:hover{transform:translateY(-3px);box-shadow:var(--shadow)}.cat .emoji{font-size:30px}.cat b{display:block;margin-top:8px;font-size:13px}
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.product{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;position:relative}.pic{height:230px;background:linear-gradient(145deg,#f0efff,#f9fafb);display:flex;align-items:center;justify-content:center;font-size:76px}.info{padding:16px}.tag{font-size:10px;font-weight:900;color:var(--accent);text-transform:uppercase}.name{font-weight:800;margin:6px 0}.price{font-weight:900;font-size:19px}.old{text-decoration:line-through;color:#999;font-size:12px;margin-left:5px}.add{width:100%;margin-top:13px;background:var(--ink);color:#fff;border:0;border-radius:12px;padding:12px;font-weight:800;cursor:pointer}
+.banner{margin:35px 5%;border-radius:28px;background:linear-gradient(115deg,#17151f,#33206b 55%,#7b48ff);color:#fff;padding:45px;display:flex;justify-content:space-between;align-items:center;gap:20px}.banner h2{font-size:38px;margin:0 0 8px;letter-spacing:-2px}.banner p{margin:0;color:#d9d5e7}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.feature{background:#fff;border:1px solid var(--line);padding:22px;border-radius:18px}.feature b{display:block;margin:9px 0 5px}.feature p{font-size:13px;color:var(--muted);margin:0;line-height:1.5}
+footer{background:#101114;color:#fff;margin-top:45px;padding:45px 5% 25px}.footergrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px;max-width:1400px;margin:auto}.footergrid p,.footergrid a{color:#aeb0b8;font-size:13px;line-height:1.7;text-decoration:none}.copy{max-width:1400px;margin:35px auto 0;border-top:1px solid #2a2b31;padding-top:18px;color:#777;font-size:12px}
+.search{display:none;position:absolute;top:76px;left:0;right:0;background:#fff;padding:15px 5%;border-bottom:1px solid var(--line)}.search input{width:100%;padding:15px;border:1px solid var(--line);border-radius:14px;outline:none}
+.cartpanel{position:fixed;right:-420px;top:0;width:390px;max-width:92vw;height:100vh;background:#fff;z-index:50;box-shadow:-20px 0 60px rgba(0,0,0,.16);padding:25px;transition:.3s;display:flex;flex-direction:column}.cartpanel.open{right:0}.carthead{display:flex;justify-content:space-between;align-items:center}.cartitems{flex:1;overflow:auto;margin:20px 0}.cartitem{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:13px 0;gap:10px}.checkout{background:var(--green);color:#fff;border:0;border-radius:13px;padding:14px;font-weight:900;cursor:pointer}.empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:900px){.navlinks{display:none}.hero{grid-template-columns:1fr;padding-top:40px}.heroart{min-height:330px}.cats{grid-template-columns:repeat(3,1fr)}.products{grid-template-columns:repeat(2,1fr)}.features{grid-template-columns:repeat(2,1fr)}.footergrid{grid-template-columns:1fr 1fr}.banner{padding:30px;flex-direction:column;align-items:flex-start}}
+@media(max-width:520px){nav{height:66px}.search{top:66px}h1{letter-spacing:-2.5px}.hero{padding-left:18px;padding-right:18px}.section{padding-left:18px;padding-right:18px}.cats{grid-template-columns:repeat(2,1fr)}.products{grid-template-columns:1fr 1fr;gap:10px}.pic{height:165px;font-size:55px}.info{padding:12px}.banner{margin-left:18px;margin-right:18px}.banner h2{font-size:30px}.footergrid{grid-template-columns:1fr}}
+</style>
+<style>
+.modal{display:none;position:fixed;inset:0;background:rgba(10,10,14,.62);backdrop-filter:blur(8px);z-index:100;padding:18px;overflow:auto}.modal.show{display:flex;align-items:center;justify-content:center}.modalbox{background:#fff;border-radius:25px;max-width:680px;width:100%;padding:25px;box-shadow:0 30px 100px rgba(0,0,0,.3)}.modalhead{display:flex;justify-content:space-between;align-items:center}.modalhead h2{margin:0;font-size:27px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}.formgrid label{font-size:12px;font-weight:800;color:#333}.formgrid input,.formgrid textarea,.formgrid select{display:block;width:100%;margin-top:6px;border:1px solid #ddd;border-radius:12px;padding:12px;outline:none;background:#fff}.formgrid textarea{min-height:78px;resize:vertical}.formgrid .full{grid-column:1/-1}.orderpreview{display:flex;justify-content:space-between;background:#f6f6f4;padding:15px;border-radius:13px;margin:17px 0}.checkoutbuttons{display:flex;gap:10px;flex-wrap:wrap}.ordermessage{margin-top:12px;font-weight:700}.add{transition:.15s}.add:hover,.btn:hover,.checkout:hover{transform:translateY(-1px);opacity:.92}
+@media(max-width:560px){.formgrid{grid-template-columns:1fr}.formgrid .full{grid-column:auto}.modalbox{padding:19px}}
+</style>
+
+</head>
+<body>
+<div class="top">FREE DELIVERY ON ORDERS OVER Rs. 5,000 • ZEEM MART — SHOP SMART, LIVE BETTER</div>
+<nav>
+  <div class="logo">Zeem<span>Mart</span></div>
+  <div class="navlinks"><a href="#shop">Shop</a><a href="#categories">Categories</a><a href="#deals">Deals</a><a href="#why">Why Zeem?</a><a href="admin.html">Admin</a></div>
+  <div class="actions">
+    <button class="iconbtn" onclick="toggleSearch()" aria-label="Search">⌕</button>
+    <button class="iconbtn" onclick="toggleCart()" aria-label="Cart">🛒<span id="count" class="cartcount">0</span></button>
+  </div>
+  <div id="search" class="search"><input id="searchInput" oninput="filterProducts()" placeholder="Search products..."></div>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="eyebrow">The new way to shop</div>
+    <h1>Everything you want. One beautiful place.</h1>
+    <p>Welcome to Zeem Mart — a fresh, fast and premium shopping experience made for everyday life in Pakistan.</p>
+    <div class="cta"><button class="btn primary" onclick="document.querySelector('#shop').scrollIntoView()">Explore products →</button><button class="btn secondary" onclick="document.querySelector('#categories').scrollIntoView()">Browse categories</button></div>
+  </div>
+  <div class="heroart"><div class="orb o1"></div><div class="orb o2"></div><div class="showcase">🛍️</div></div>
+</section>
+
+<section id="categories" class="section">
+  <div class="sectionhead"><div><h2>Shop by category</h2><div class="muted">Curated for your everyday needs.</div></div></div>
+  <div class="cats">
+    <div class="cat" onclick="category('Fashion')"><div class="emoji">👗</div><b>Fashion</b></div>
+    <div class="cat" onclick="category('Beauty')"><div class="emoji">✨</div><b>Beauty</b></div>
+    <div class="cat" onclick="category('Electronics')"><div class="emoji">🎧</div><b>Electronics</b></div>
+    <div class="cat" onclick="category('Home')"><div class="emoji">🏠</div><b>Home</b></div>
+    <div class="cat" onclick="category('Accessories')"><div class="emoji">👜</div><b>Accessories</b></div>
+    <div class="cat" onclick="category('Kids')"><div class="emoji">🧸</div><b>Kids</b></div>
+  </div>
+</section>
+
+<section id="shop" class="section">
+  <div class="sectionhead"><div><h2>Trending now</h2><div class="muted">Your next favourite is waiting.</div></div><span id="result" class="muted"></span></div>
+  <div id="products" class="products"></div>
+</section>
+
+<section id="deals" class="banner">
+  <div><h2>Big style. Better prices.</h2><p>Launch your Zeem Mart collection with special offers and seasonal deals.</p></div>
+  <button class="btn secondary" onclick="document.querySelector('#shop').scrollIntoView()">Shop deals</button>
+</section>
+
+<section id="why" class="section">
+  <div class="sectionhead"><div><h2>Why Zeem Mart?</h2><div class="muted">Built around trust, convenience and style.</div></div></div>
+  <div class="features">
+    <div class="feature">🚚<b>Fast Delivery</b><p>Reliable delivery across Pakistan.</p></div>
+    <div class="feature">🔒<b>Secure Shopping</b><p>Your order details stay protected.</p></div>
+    <div class="feature">💬<b>Real Support</b><p>Easy help through WhatsApp or phone.</p></div>
+    <div class="feature">↩️<b>Easy Returns</b><p>Simple customer-friendly return policy.</p></div>
+  </div>
+</section>
+
+
+<div id="checkoutModal" class="modal">
+  <div class="modalbox">
+    <div class="modalhead"><h2>Complete Your Order</h2><button class="iconbtn" onclick="closeCheckout()">✕</button></div>
+    <p class="muted">Enter your details and choose how you want to place the order.</p>
+    <form id="orderForm" action="https://formspree.io/f/xrpbydne" method="POST" onsubmit="placeOrder(event)">
+      <div class="formgrid">
+        <label>Full Name<input id="custName" required placeholder="Your full name"></label>
+        <label>Phone Number<input id="custPhone" required pattern="[0-9+\-\s]{10,}" placeholder="03XXXXXXXXX"></label>
+        <label class="full">Complete Address<textarea id="custAddress" required placeholder="House, street, area, city"></textarea></label>
+        <label>City<input id="custCity" required placeholder="Mianwali"></label>
+        <label>Payment Method<select id="payment"><option>Cash on Delivery</option><option>Bank Transfer</option></select></label>
+        <label class="full">Order Notes<textarea id="notes" placeholder="Color, size, special instructions..."></textarea></label>
+      </div>
+      <div class="orderpreview"><b>Order Total</b><b id="modalTotal">Rs. 0</b></div>
+      <div class="checkoutbuttons">
+        <button type="submit" class="btn primary">Place Order</button>
+        <button type="button" class="btn secondary" onclick="sendWhatsApp()">Order via WhatsApp</button>
+      </div>
+      <input type="hidden" name="_subject" value="New Zeem Mart Order">
+      <input type="hidden" name="order_details" id="orderDetailsField">
+      <div id="orderMessage" class="ordermessage"></div>
+    </form>
+  </div>
+</div>
+<footer>
+<div class="footergrid">
+  <div><div class="logo">Zeem<span>Mart</span></div><p>A modern Pakistani online store concept. Replace these demo products with your own collection and start selling.</p></div>
+  <div><b>Shop</b><p><a href="#shop">All Products</a><br><a href="#categories">Categories</a><br><a href="#deals">Deals</a></p></div>
+  <div><b>Help</b><p><a href="#">Delivery</a><br><a href="#">Returns</a><br><a href="#">Contact</a></p></div>
+  <div><b>Contact</b><p>WhatsApp: +92 300 0000000<br>Email: hello@zeemmart.com<br>Pakistan</p></div>
+</div>
+<div class="copy">© 2026 Zeem Mart. All rights reserved.</div>
+</footer>
+
+<aside id="cart" class="cartpanel">
+  <div class="carthead"><h2>Your Cart</h2><button class="iconbtn" onclick="toggleCart()">✕</button></div>
+  <div id="cartitems" class="cartitems"></div>
+  <div><div style="display:flex;justify-content:space-between;margin-bottom:12px"><b>Total</b><b id="total">Rs. 0</b></div><button class="checkout" style="width:100%" onclick="checkout()">Order on WhatsApp</button></div>
+</aside>
+
+<script>
+const defaultProducts=[
+{name:"Premium Classic Watch",cat:"Accessories",price:3499,old:4499,emoji:"⌚"},
+{name:"Wireless Earbuds Pro",cat:"Electronics",price:2999,old:3999,emoji:"🎧"},
+{name:"Elegant Handbag",cat:"Fashion",price:2799,old:3499,emoji:"👜"},
+{name:"Glow Beauty Set",cat:"Beauty",price:1899,old:2399,emoji:"✨"},
+{name:"Smart Desk Lamp",cat:"Home",price:2499,old:2999,emoji:"💡"},
+{name:"Premium Men's Wallet",cat:"Accessories",price:1599,old:1999,emoji:"👝"},
+{name:"Cozy Home Cushion",cat:"Home",price:999,old:1299,emoji:"🛋️"},
+{name:"Kids Gift Pack",cat:"Kids",price:2199,old:2699,emoji:"🧸"}
+];
+let products=JSON.parse(localStorage.getItem("zeemmart_products")||"null")||defaultProducts;
+let cart=[];
+const money=n=>"Rs. "+n.toLocaleString("en-PK");
+function render(list=products){
+const box=document.getElementById("products"); box.innerHTML="";
+list.forEach((p,i)=>{box.innerHTML+=`<article class="product"><div class="pic">${p.emoji}</div><div class="info"><div class="tag">${p.cat}</div><div class="name">${p.name}</div><div class="price">${money(p.price)} <span class="old">${money(p.old)}</span></div><button class="add" onclick="add(${products.indexOf(p)})">Add to cart</button></div></article>`});
+document.getElementById("result").textContent=list.length+" products";
+}
+function add(i){cart.push(products[i]);renderCart();document.getElementById("cart").classList.add("open")}
+function renderCart(){document.getElementById("count").textContent=cart.length;const box=document.getElementById("cartitems");box.innerHTML=cart.length?cart.map((p,i)=>`<div class="cartitem"><span>${p.emoji} ${p.name}</span><b>${money(p.price)}<button onclick="removeItem(${i})" style="border:0;background:none;cursor:pointer">✕</button></b></div>`).join(""):'<div class="empty">Your cart is empty.<br>Add something you love.</div>';document.getElementById("total").textContent=money(cart.reduce((s,p)=>s+p.price,0))}
+function removeItem(i){cart.splice(i,1);renderCart()}
+function toggleCart(){document.getElementById("cart").classList.toggle("open")}
+function toggleSearch(){let s=document.getElementById("search");s.style.display=s.style.display==="block"?"none":"block";if(s.style.display==="block")document.getElementById("searchInput").focus()}
+function filterProducts(){let q=document.getElementById("searchInput").value.toLowerCase();render(products.filter(p=>(p.name+" "+p.cat).toLowerCase().includes(q)))}
+function category(c){render(products.filter(p=>p.cat===c));document.querySelector("#shop").scrollIntoView()}
+function checkout(){if(!cart.length)return alert("Please add a product first.");let text="Assalam-o-Alaikum, I want to order from Zeem Mart:%0A"+cart.map(p=>`• ${p.name} — ${money(p.price)}`).join("%0A")+`%0A%0ATotal: ${money(cart.reduce((s,p)=>s+p.price,0))}%0A%0AName:%0AAddress:%0APhone:`;window.open("https://wa.me/923000000000?text="+text,"_blank")}
+render();renderCart();
+</script>
+</body>
+</html>
