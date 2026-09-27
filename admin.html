@@ -1,66 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Zeem Mart — Admin Panel</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Arial;background:#f5f5f3;color:#111}.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}.box{background:#fff;width:100%;max-width:430px;padding:30px;border-radius:24px;box-shadow:0 20px 70px #00000012}.logo{font-size:26px;font-weight:900;margin-bottom:7px}.logo span{color:#6d35ff}.muted{color:#70727a}.field{margin:13px 0}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}.field input,.field select{width:100%;padding:12px;border:1px solid #ddd;border-radius:11px}.btn{border:0;border-radius:11px;padding:12px 16px;font-weight:800;cursor:pointer}.primary{background:#111;color:#fff}.purple{background:#6d35ff;color:#fff}.danger{background:#fee;color:#b22}.app{display:none}.top{background:#111;color:#fff;padding:16px 5%;display:flex;justify-content:space-between;align-items:center}.wrap{max-width:1250px;margin:auto;padding:25px 5%}.grid{display:grid;grid-template-columns:330px 1fr;gap:20px}.card{background:#fff;border:1px solid #e7e7e4;border-radius:20px;padding:20px}.products{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.product{border:1px solid #e5e5e2;border-radius:16px;overflow:hidden;background:#fff}.photo{height:155px;background:linear-gradient(135deg,#eee9ff,#f7f7f5);display:flex;align-items:center;justify-content:center;font-size:65px}.pinfo{padding:14px}.actions{display:flex;gap:7px;margin-top:12px}.actions button{flex:1}.preview{height:130px;border:1px dashed #bbb;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;overflow:hidden;background:#fafafa}.preview img{width:100%;height:100%;object-fit:cover}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}.stat{background:#fff;border:1px solid #e5e5e2;border-radius:16px;padding:18px}.stat b{font-size:24px;display:block}.notice{padding:10px;border-radius:10px;background:#f0ebff;color:#4d27b6;font-size:12px;margin-top:12px}
-@media(max-width:900px){.grid{grid-template-columns:1fr}.products{grid-template-columns:repeat(2,1fr)}}@media(max-width:550px){.products{grid-template-columns:1fr}.top{padding:14px 4%}.stats{grid-template-columns:1fr 1fr}}
-</style></head>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Arial;background:#f5f5f3;color:#111}
+button,input,select,textarea{font:inherit}.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.box,.card{background:#fff;border:1px solid #e7e7e4;border-radius:20px;padding:22px;box-shadow:0 20px 70px #0000000d}
+.box{width:100%;max-width:440px}.logo{font-size:27px;font-weight:900}.logo span{color:#6d35ff}.muted{color:#70727a}
+.field{margin:13px 0}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:11px;background:#fff}
+.btn{border:0;border-radius:11px;padding:12px 16px;font-weight:800;cursor:pointer}.purple{background:#6d35ff;color:#fff}.danger{background:#fee;color:#b22}
+.app{display:none}.top{background:#111;color:#fff;padding:16px 5%;display:flex;justify-content:space-between;align-items:center}
+.wrap{max-width:1250px;margin:auto;padding:25px 5%}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.stat{background:#fff;border:1px solid #e5e5e2;border-radius:16px;padding:18px}.stat b{font-size:24px;display:block}
+.grid{display:grid;grid-template-columns:330px 1fr;gap:20px}.products{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.product{border:1px solid #e5e5e2;border-radius:16px;overflow:hidden;background:#fff}.photo{height:155px;background:linear-gradient(135deg,#eee9ff,#f7f7f5);display:flex;align-items:center;justify-content:center;font-size:65px}
+.photo img{width:100%;height:100%;object-fit:cover}.pinfo{padding:14px}.actions{display:flex;gap:7px;margin-top:12px}.actions button{flex:1}
+.preview{height:130px;border:1px dashed #bbb;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;overflow:hidden;background:#fafafa}
+.preview img{width:100%;height:100%;object-fit:cover}.notice{padding:10px;border-radius:10px;background:#f0ebff;color:#4d27b6;font-size:12px;margin-top:12px}
+.order{border:1px solid #e5e5e2;border-radius:14px;padding:14px;margin-top:10px;background:#fff}.orderhead{display:flex;justify-content:space-between;gap:10px}.status{padding:7px;border:1px solid #ddd;border-radius:9px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.products{grid-template-columns:repeat(2,1fr)}}@media(max-width:550px){.products{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+</style>
+</head>
 <body>
 <div id="login" class="login"><div class="box">
-<div class="logo">Zeem<span>Mart</span></div><h2>Admin Panel</h2><p class="muted">Manage your products and store catalog.</p>
-<div class="field"><label>Username</label><input id="user" value="admin"></div>
-<div class="field"><label>Password</label><input id="pass" type="password" placeholder="Enter admin password"></div>
+<div class="logo">Zeem<span>Mart</span></div><h2>Admin Panel</h2>
+<p class="muted">Secure Supabase login — no demo password is stored in this page.</p>
+<div class="field"><label>Admin Email</label><input id="email" type="email" placeholder="your@email.com"></div>
+<div class="field"><label>Password</label><input id="password" type="password" placeholder="Your password"></div>
 <button class="btn purple" style="width:100%" onclick="login()">Login</button>
-<div class="notice">Demo login: username <b>admin</b>, password <b>zeem123</b>. Change this before publishing.</div>
+<div id="loginMsg" class="notice">First create an admin user in Supabase Authentication, then add that user's ID to the admin_users table.</div>
 </div></div>
 
 <div id="app" class="app">
-<div class="top"><div><b>🛍️ Zeem Mart Admin</b><span style="margin-left:12px;color:#aaa;font-size:12px">Store Management</span></div><button class="btn" onclick="logout()">Logout</button></div>
+<div class="top"><div><b>🛍️ Zeem Mart Admin</b><span style="margin-left:12px;color:#aaa;font-size:12px">Online Database</span></div>
+<div><button class="btn" onclick="location.href='index.html'">Store</button> <button class="btn" onclick="logout()">Logout</button></div></div>
 <div class="wrap">
-<div class="stats"><div class="stat"><span class="muted">Products</span><b id="statProducts">0</b></div><div class="stat"><span class="muted">Categories</span><b id="statCats">0</b></div><div class="stat"><span class="muted">Catalog Value</span><b id="statValue">Rs. 0</b></div></div>
+<div class="stats">
+<div class="stat"><span class="muted">Products</span><b id="statProducts">0</b></div>
+<div class="stat"><span class="muted">Categories</span><b id="statCats">0</b></div>
+<div class="stat"><span class="muted">Orders</span><b id="statOrders">0</b></div>
+</div>
 <div class="grid">
 <div class="card">
-<h2 id="formTitle">Add Product</h2>
-<input type="hidden" id="editId">
+<h2 id="formTitle">Add Product</h2><input type="hidden" id="editId">
 <div class="field"><label>Product Name</label><input id="name" placeholder="e.g. Bridal Dress"></div>
 <div class="field"><label>Category</label><select id="cat"><option>Fashion</option><option>Beauty</option><option>Electronics</option><option>Home</option><option>Accessories</option><option>Kids</option></select></div>
 <div class="field"><label>Price (PKR)</label><input id="price" type="number" placeholder="4999"></div>
 <div class="field"><label>Old / Sale Price</label><input id="old" type="number" placeholder="5999"></div>
-<div class="field"><label>Emoji (if no picture)</label><input id="emoji" value="🛍️"></div>
-<div class="field"><label>Product Image URL</label><input id="image" placeholder="https://.../image.jpg" oninput="preview()"></div>
+<div class="field"><label>Emoji</label><input id="emoji" value="🛍️"></div>
+<div class="field"><label>Product Image URL</label><input id="image" placeholder="https://..." oninput="preview()"></div>
+<div class="field"><label>Description</label><textarea id="description" placeholder="Short product description"></textarea></div>
 <div id="preview" class="preview">Product preview</div>
 <button class="btn purple" style="width:100%" onclick="saveProduct()">Save Product</button>
 <button class="btn" style="width:100%;margin-top:8px" onclick="resetForm()">Clear</button>
 </div>
-<div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><div><h2 style="margin:0">Products</h2><p class="muted" style="margin-top:5px">Changes are saved on this browser.</p></div><button class="btn primary" onclick="openStore()">View Store</button></div><div id="products" class="products" style="margin-top:18px"></div></div>
+
+<div>
+<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><div><h2 style="margin:0">Products</h2><p class="muted" style="margin-top:5px">Changes are saved online in Supabase.</p></div><button class="btn" onclick="loadProducts()">Refresh</button></div>
+<div id="products" class="products" style="margin-top:18px"></div></div>
+<div class="card" style="margin-top:20px"><h2>Customer Orders</h2><div id="orders"></div></div>
 </div>
-</div></div>
+</div>
+</div>
+</div>
 
 <script>
-const defaults=[
-{name:"Premium Classic Watch",cat:"Accessories",price:3499,old:4499,emoji:"⌚"},
-{name:"Wireless Earbuds Pro",cat:"Electronics",price:2999,old:3999,emoji:"🎧"},
-{name:"Elegant Handbag",cat:"Fashion",price:2799,old:3499,emoji:"👜"},
-{name:"Glow Beauty Set",cat:"Beauty",price:1899,old:2399,emoji:"✨"},
-{name:"Smart Desk Lamp",cat:"Home",price:2499,old:2999,emoji:"💡"},
-{name:"Premium Men's Wallet",cat:"Accessories",price:1599,old:1999,emoji:"👝"},
-{name:"Cozy Home Cushion",cat:"Home",price:999,old:1299,emoji:"🛋️"},
-{name:"Kids Gift Pack",cat:"Kids",price:2199,old:2699,emoji:"🧸"}];
-let products=JSON.parse(localStorage.getItem("zeemmart_products")||"null")||defaults;
-function money(n){return "Rs. "+Number(n||0).toLocaleString("en-PK")}
-function login(){if(document.getElementById("user").value==="admin"&&document.getElementById("pass").value==="zeem123"){sessionStorage.setItem("zeem_admin","1");show()}else alert("Incorrect login details.")}
-function show(){document.getElementById("login").style.display="none";document.getElementById("app").style.display="block";render()}
-function logout(){sessionStorage.removeItem("zeem_admin");location.reload()}
-function render(){let box=document.getElementById("products");box.innerHTML="";products.forEach((p,i)=>{box.innerHTML+=`<div class="product"><div class="photo">${p.image?`<img src="${p.image}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">`:p.emoji||"🛍️"}</div><div class="pinfo"><b>${esc(p.name)}</b><div class="muted">${esc(p.cat)}</div><strong>${money(p.price)}</strong> <small style="text-decoration:line-through;color:#999">${money(p.old)}</small><div class="actions"><button class="btn" onclick="edit(${i})">Edit</button><button class="btn danger" onclick="del(${i})">Delete</button></div></div></div>`});document.getElementById("statProducts").textContent=products.length;document.getElementById("statCats").textContent=new Set(products.map(p=>p.cat)).size;document.getElementById("statValue").textContent=money(products.reduce((s,p)=>s+Number(p.price||0),0))}
-function esc(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
-function saveProduct(){let name=document.getElementById("name").value.trim(),price=Number(document.getElementById("price").value),old=Number(document.getElementById("old").value||price),cat=document.getElementById("cat").value,emoji=document.getElementById("emoji").value||"🛍️",image=document.getElementById("image").value.trim();if(!name||!price){alert("Product name and price are required.");return}let id=document.getElementById("editId").value;if(id===""){products.push({name,cat,price,old,emoji,image})}else products[Number(id)]={name,cat,price,old,emoji,image};localStorage.setItem("zeemmart_products",JSON.stringify(products));resetForm();render();alert("Product saved.")}
-function edit(i){let p=products[i];document.getElementById("editId").value=i;document.getElementById("formTitle").textContent="Edit Product";document.getElementById("name").value=p.name;document.getElementById("cat").value=p.cat;document.getElementById("price").value=p.price;document.getElementById("old").value=p.old;document.getElementById("emoji").value=p.emoji||"";document.getElementById("image").value=p.image||"";preview();scrollTo(0,0)}
-function del(i){if(confirm("Delete "+products[i].name+"?")){products.splice(i,1);localStorage.setItem("zeemmart_products",JSON.stringify(products));render()}}
-function resetForm(){["editId","name","price","old","image"].forEach(id=>document.getElementById(id).value="");document.getElementById("cat").value="Fashion";document.getElementById("emoji").value="🛍️";document.getElementById("formTitle").textContent="Add Product";document.getElementById("preview").innerHTML="Product preview"}
-function preview(){let u=document.getElementById("image").value.trim();document.getElementById("preview").innerHTML=u?`<img src="${u}" onerror="this.parentNode.innerHTML='Invalid image URL'">`:(document.getElementById("emoji").value||"🛍️")}
-function openStore(){location.href="index.html"}
-if(sessionStorage.getItem("zeem_admin")==="1")show();
+const SUPABASE_URL="https://zsopvbjlnwalnrcclerm.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_9ZMtUwAZuXXHZD3FdAXhXQ_3tVLD4JG";
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+let products=[];
+
+const money=n=>"Rs. "+Number(n||0).toLocaleString("en-PK");
+const esc=s=>String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const attr=s=>esc(s).replace(/`/g,"&#96;");
+
+async function login(){
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
+  const msg=document.getElementById("loginMsg");
+  if(!email||!password){msg.textContent="Email and password are required.";return;}
+  msg.textContent="Signing in...";
+  const {data,error}=await sb.auth.signInWithPassword({email,password});
+  if(error){msg.textContent=error.message;return;}
+  const {data:admin,error:ae}=await sb.from("admin_users").select("user_id").eq("user_id",data.user.id).maybeSingle();
+  if(ae || !admin){
+    await sb.auth.signOut();
+    msg.textContent="Login worked, but this account is not registered as a Zeem Mart admin.";
+    return;
+  }
+  showApp();
+}
+async function logout(){await sb.auth.signOut();location.reload();}
+function showApp(){document.getElementById("login").style.display="none";document.getElementById("app").style.display="block";loadProducts();loadOrders();}
+async function loadProducts(){
+  const {data,error}=await sb.from("products").select("*").order("created_at",{ascending:false});
+  if(error){alert(error.message);return;}
+  products=data||[];renderProducts();
+}
+function renderProducts(){
+  const box=document.getElementById("products");box.innerHTML="";
+  products.forEach(p=>{
+    const image=p.image_url?`<img src="${attr(p.image_url)}" onerror="this.style.display='none'">`:"";
+    box.innerHTML+=`<div class="product"><div class="photo">${image}${image?"":(p.emoji||"🛍️")}</div>
+    <div class="pinfo"><b>${esc(p.name)}</b><div class="muted">${esc(p.category)}</div><strong>${money(p.price)}</strong>
+    <div class="actions"><button class="btn" onclick="editProduct(${p.id})">Edit</button><button class="btn danger" onclick="deleteProduct(${p.id})">Delete</button></div></div></div>`;
+  });
+  document.getElementById("statProducts").textContent=products.length;
+  document.getElementById("statCats").textContent=new Set(products.map(p=>p.category)).size;
+}
+async function saveProduct(){
+  const name=document.getElementById("name").value.trim(),price=Number(document.getElementById("price").value);
+  if(!name||!price)return alert("Product name and price are required.");
+  const payload={name,category:document.getElementById("cat").value,price,
+    old_price:Number(document.getElementById("old").value||price),emoji:document.getElementById("emoji").value||"🛍️",
+    image_url:document.getElementById("image").value.trim()||null,description:document.getElementById("description").value.trim()||null,active:true};
+  const id=document.getElementById("editId").value;
+  const result=id?await sb.from("products").update(payload).eq("id",Number(id)):await sb.from("products").insert(payload);
+  if(result.error){alert(result.error.message);return;}
+  resetForm();await loadProducts();alert("Product saved online.");
+}
+function editProduct(id){
+  const p=products.find(x=>Number(x.id)===Number(id));if(!p)return;
+  document.getElementById("editId").value=p.id;document.getElementById("formTitle").textContent="Edit Product";
+  document.getElementById("name").value=p.name;document.getElementById("cat").value=p.category||"Fashion";
+  document.getElementById("price").value=p.price;document.getElementById("old").value=p.old_price||p.price;
+  document.getElementById("emoji").value=p.emoji||"🛍️";document.getElementById("image").value=p.image_url||"";
+  document.getElementById("description").value=p.description||"";preview();scrollTo(0,0);
+}
+async function deleteProduct(id){
+  const p=products.find(x=>Number(x.id)===Number(id));if(!p||!confirm("Delete "+p.name+"?"))return;
+  const {error}=await sb.from("products").delete().eq("id",Number(id));
+  if(error)alert(error.message);else loadProducts();
+}
+function resetForm(){
+  ["editId","name","price","old","image","description"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("cat").value="Fashion";document.getElementById("emoji").value="🛍️";
+  document.getElementById("formTitle").textContent="Add Product";document.getElementById("preview").innerHTML="Product preview";
+}
+function preview(){const u=document.getElementById("image").value.trim();document.getElementById("preview").innerHTML=u?`<img src="${attr(u)}" onerror="this.parentNode.innerHTML='Invalid image URL'">`:(document.getElementById("emoji").value||"🛍️");}
+
+async function loadOrders(){
+  const {data,error}=await sb.from("orders").select("*").order("created_at",{ascending:false});
+  if(error){console.error(error);return;}
+  document.getElementById("statOrders").textContent=(data||[]).length;
+  const box=document.getElementById("orders");
+  box.innerHTML=(data||[]).length?data.map(o=>`<div class="order"><div class="orderhead"><div><b>${esc(o.order_id)}</b><div class="muted">${esc(o.customer_name)} • ${esc(o.phone)}</div></div>
+  <select class="status" onchange="updateStatus(${o.id},this.value)"><option ${o.status==="Pending"?"selected":""}>Pending</option><option ${o.status==="Confirmed"?"selected":""}>Confirmed</option><option ${o.status==="Shipped"?"selected":""}>Shipped</option><option ${o.status==="Delivered"?"selected":""}>Delivered</option><option ${o.status==="Cancelled"?"selected":""}>Cancelled</option></select></div>
+  <div style="margin-top:10px"><b>${money(o.total)}</b> • ${esc(o.city)} • ${esc(o.payment_method)}</div>
+  <div class="muted" style="white-space:pre-wrap;margin-top:8px">${esc(o.notes)}</div></div>`).join(""):'<p class="muted">No orders yet.</p>';
+}
+async function updateStatus(id,status){
+  const {error}=await sb.from("orders").update({status}).eq("id",Number(id));
+  if(error)alert(error.message);
+}
+sb.auth.getSession().then(({data})=>{if(data.session)showApp();});
 </script>
 </body></html>
