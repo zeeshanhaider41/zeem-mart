@@ -52,7 +52,8 @@ button,input,select,textarea{font:inherit}.login{min-height:100vh;display:flex;a
 <div class="field"><label>Price (PKR)</label><input id="price" type="number" placeholder="4999"></div>
 <div class="field"><label>Old / Sale Price</label><input id="old" type="number" placeholder="5999"></div>
 <div class="field"><label>Emoji</label><input id="emoji" value="🛍️"></div>
-<div class="field"><label>Product Image URL</label><input id="image" placeholder="https://..." oninput="preview()"></div>
+<div class="field"><label>Product Photo</label><input id="imageFile" type="file" accept="image/*" onchange="uploadProductImage()"><div id="uploadMsg" class="muted" style="font-size:12px;margin-top:6px">Mobile gallery se photo select karein</div></div>
+<div class="field"><label>Product Image URL (automatic)</label><input id="image" placeholder="Photo upload ke baad URL yahan aa jayega" readonly></div>
 <div class="field"><label>Description</label><textarea id="description" placeholder="Short product description"></textarea></div>
 <div id="preview" class="preview">Product preview</div>
 <button class="btn purple" style="width:100%" onclick="saveProduct()">Save Product</button>
@@ -129,6 +130,7 @@ function editProduct(id){
   document.getElementById("name").value=p.name;document.getElementById("cat").value=p.category||"Fashion";
   document.getElementById("price").value=p.price;document.getElementById("old").value=p.old_price||p.price;
   document.getElementById("emoji").value=p.emoji||"🛍️";document.getElementById("image").value=p.image_url||"";
+  document.getElementById("imageFile").value="";document.getElementById("uploadMsg").textContent="Mobile gallery se photo select karein";
   document.getElementById("description").value=p.description||"";preview();scrollTo(0,0);
 }
 async function deleteProduct(id){
@@ -136,8 +138,26 @@ async function deleteProduct(id){
   const {error}=await sb.from("products").delete().eq("id",Number(id));
   if(error)alert(error.message);else loadProducts();
 }
+async function uploadProductImage(){
+  const file=document.getElementById("imageFile").files[0];
+  const msg=document.getElementById("uploadMsg");
+  if(!file)return;
+  if(!file.type.startsWith("image/"))return alert("Sirf image file select karein.");
+  if(file.size>5*1024*1024)return alert("Photo 5 MB se kam honi chahiye.");
+  msg.textContent="Photo upload ho rahi hai...";
+  const safe=file.name.toLowerCase().replace(/[^a-z0-9.]+/g,"-");
+  const path=`${Date.now()}-${Math.random().toString(36).slice(2)}-${safe}`;
+  const {error}=await sb.storage.from("product-images").upload(path,file,{contentType:file.type,upsert:false});
+  if(error){msg.textContent="Upload failed: "+error.message;return;}
+  const {data}=sb.storage.from("product-images").getPublicUrl(path);
+  document.getElementById("image").value=data.publicUrl;
+  msg.textContent="Photo upload ho gayi ✓";
+  preview();
+}
 function resetForm(){
   ["editId","name","price","old","image","description"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("imageFile").value="";
+  document.getElementById("uploadMsg").textContent="Mobile gallery se photo select karein";
   document.getElementById("cat").value="Fashion";document.getElementById("emoji").value="🛍️";
   document.getElementById("formTitle").textContent="Add Product";document.getElementById("preview").innerHTML="Product preview";
 }
